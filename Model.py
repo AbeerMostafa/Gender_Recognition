@@ -48,9 +48,9 @@ def CNN(x_train, y_train, x_test, y_test):
 
     input_shape = x_train[0].shape
     print("one sample input shape to the neural network =  ", input_shape, "num of samples =  ", x_train.shape[0] )
-    batch_size = 16
+    batch_size = 10
     num_classes = 2
-    epochs = 10
+    epochs = 14
 
     x_train = x_train.astype('float32')
     x_test = x_test.astype('float32')
@@ -59,26 +59,20 @@ def CNN(x_train, y_train, x_test, y_test):
     y_test = keras.utils.to_categorical(y_test, num_classes)
 
     model = Sequential()
-    model.add(Conv2D(32, kernel_size=(5, 5), strides=(1, 1),
-                     activation='relu',
-                     input_shape=input_shape))
+    model.add(Conv2D(32, kernel_size=(5, 5), strides=(1, 1), activation='relu', input_shape=input_shape))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
     model.add(Conv2D(64, (5, 5), activation='relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Conv2D(128, (3, 3), activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Flatten())
-    model.add(Dense(1000, activation='relu'))
+    model.add(Dense(100, activation='relu'))
+
     model.add(Dense(num_classes, activation='softmax'))
 
-    model.compile(loss=keras.losses.categorical_crossentropy,
-                  optimizer=keras.optimizers.Adam(),
-                  metrics=['accuracy'])
+    model.compile(loss=keras.losses.binary_crossentropy, optimizer=keras.optimizers.Adam(), metrics=['accuracy'])
 
-    model.fit(x_train, y_train,
-              batch_size=batch_size,
-              epochs=epochs,
-              verbose=1,
-              validation_data=(x_test, y_test),
-              callbacks=[history])
+    model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs, verbose=1, validation_data=(x_test, y_test), callbacks=[history])
 
     train_score = model.evaluate(x_train, y_train, verbose=0)
     print('Train loss: {}, Train accuracy: {}'.format(train_score[0], train_score[1]))
@@ -249,8 +243,8 @@ print("Number of samples and their shape :  ", splitted_dataset.shape)
 
 features, labels = separate_labels(splitted_dataset, important_features)
 
-features, labels = Autocorrelation(features, labels)
-features, labels = remove_na(features, labels)
+# features, labels = Autocorrelation(features, labels)
+# features, labels = remove_na(features, labels)
 
 
 print(features.shape, len(labels))
@@ -269,16 +263,16 @@ print(test_signals_ucihar.shape)
 print(train_labels_ucihar.shape)
 print(test_labels_ucihar.shape)
 
-x_train, y_train, x_test, y_test = train_signals_ucihar, train_labels_ucihar, test_signals_ucihar, test_labels_ucihar
+# x_train, y_train, x_test, y_test = train_signals_ucihar, train_labels_ucihar, test_signals_ucihar, test_labels_ucihar
 
-#x_train, y_train, x_test, y_test = wavelet_transform(train_signals_ucihar, test_signals_ucihar, train_labels_ucihar, test_labels_ucihar)
+x_train, y_train, x_test, y_test = wavelet_transform(train_signals_ucihar, test_signals_ucihar, train_labels_ucihar, test_labels_ucihar)
 
 print(x_train.shape)
 print(len(y_train))
 print(x_test.shape)
 print(len(y_test))
 
-RF_classifier(x_train, y_train, x_test, y_test)
+# RF_classifier(x_train, y_train, x_test, y_test)
 #svm_classifier(x_train, y_train, x_test, y_test)
-#CNN(x_train, y_train, x_test, y_test)
+CNN(x_train, y_train, x_test, y_test)
 

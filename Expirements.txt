@@ -1,0 +1,183 @@
+(1)
+Wavelets = 64
+layers = 2conv, 2 dense, relu at end
+
+Train loss: 0.48481050028412753, Train accuracy: 0.7634408473968506
+Test loss: 0.6497543487080767, Test accuracy: 0.6411042809486389
+
+(2)
+Added one conv and pooling layer, added dense layer, sigmoid at end
+removed two lines from wavelet, 128
+Train loss: 0.693147130276201, Train accuracy: 0.5099846124649048
+Test loss: 0.6931471001882494, Test accuracy: 0.5184049010276794
+
+(3)
+same as (2) but relu at dense, softmax at end
+Train loss: 0.1720986535197579, Train accuracy: 0.9331797361373901
+Test loss: 0.9693316550342583, Test accuracy: 0.6533742547035217
+(4)
+added 2 more dense 1000
+Train loss: 0.6927672640152974, Train accuracy: 0.5138248801231384
+Test loss: 0.691763140672555, Test accuracy: 0.5306748747825623
+
+(5)
+removed one conv layer and ther's only one dense 1000
+Train loss: 0.693147130276201, Train accuracy: 0.5099846124649048
+Test loss: 0.6931471001882494, Test accuracy: 0.5184049010276794
+
+
+(6)
+epochs = 10
+batch size = 16
+model = Sequential()
+    model.add(Conv2D(32, kernel_size=(5, 5), strides=(1, 1), activation='relu', input_shape=input_shape))
+    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+    model.add(Conv2D(64, (5, 5), activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Conv2D(128, (3, 3), activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Flatten())
+    model.add(Dense(100, activation='relu'))
+
+    model.add(Dense(num_classes, activation='softmax'))
+
+    model.compile(loss=keras.losses.binary_crossentropy,
+
+Train loss: 0.19739210857407471, Train accuracy: 0.9301075339317322
+Test loss: 0.771680629326522, Test accuracy: 0.696319043636322
+
+(7)
+
+batch_size = 30
+    num_classes = 2
+    epochs = 20
+
+    x_train = x_train.astype('float32')
+    x_test = x_test.astype('float32')
+
+    y_train = keras.utils.to_categorical(y_train, num_classes)
+    y_test = keras.utils.to_categorical(y_test, num_classes)
+
+    model = Sequential()
+    model.add(Conv2D(32, kernel_size=(5, 5), strides=(1, 1), activation='relu', input_shape=input_shape))
+    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+    model.add(Conv2D(64, (5, 5), activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Conv2D(128, (3, 3), activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Conv2D(128, (3, 3), activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Flatten())
+    model.add(Dense(100, activation='relu'))
+
+    model.add(Dense(num_classes, activation='softmax'))
+
+    model.compile(loss=keras.losses.binary_crossentropy,
+                  optimizer=keras.optimizers.Adam(),
+
+
+
+Train loss: 0.02273618757793431, Train accuracy: 0.9961597323417664
+Test loss: 1.3506178629178942, Test accuracy: 0.6687116622924805
+
+
+(8)
+batch_size = 10
+    num_classes = 2
+    epochs = 15
+
+    x_train = x_train.astype('float32')
+    x_test = x_test.astype('float32')
+
+    y_train = keras.utils.to_categorical(y_train, num_classes)
+    y_test = keras.utils.to_categorical(y_test, num_classes)
+
+    model = Sequential()
+    model.add(Conv2D(32, kernel_size=(5, 5), strides=(1, 1), activation='relu', input_shape=input_shape))
+    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+    model.add(Conv2D(64, (5, 5), activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Conv2D(128, (3, 3), activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Conv2D(128, (3, 3), activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Flatten())
+    model.add(Dense(100, activation='relu'))
+
+    model.add(Dense(num_classes, activation='softmax'))
+
+    model.compile(loss=keras.losses.binary_crossentropy,
+
+
+    Train loss: 0.3170597846698468, Train accuracy: 0.8540706634521484
+Test loss: 0.8250117071567138, Test accuracy: 0.6625766754150391
+
+(9)
+
+batch_size = 7
+    num_classes = 2
+    epochs = 14
+
+    x_train = x_train.astype('float32')
+    x_test = x_test.astype('float32')
+
+    y_train = keras.utils.to_categorical(y_train, num_classes)
+    y_test = keras.utils.to_categorical(y_test, num_classes)
+
+    model = Sequential()
+    model.add(Conv2D(32, kernel_size=(5, 5), strides=(1, 1), activation='relu', input_shape=input_shape))
+    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+    model.add(Conv2D(64, (5, 5), activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Conv2D(128, (3, 3), activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Conv2D(128, (3, 3), activation='relu'))
+    model.add(Conv2D(128, (3, 3), activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Flatten())
+    model.add(Dense(100, activation='relu'))
+
+    model.add(Dense(num_classes, activation='softmax'))
+
+    model.compile(loss=keras.losses.binary_crosse
+
+
+    Train loss: 0.46625230792114447, Train accuracy: 0.7657449841499329
+Test loss: 0.6561382650597695, Test accuracy: 0.6840490698814392
+
+(10)
+
+batch_size = 10
+    num_classes = 2
+    epochs = 14
+
+    x_train = x_train.astype('float32')
+    x_test = x_test.astype('float32')
+
+    y_train = keras.utils.to_categorical(y_train, num_classes)
+    y_test = keras.utils.to_categorical(y_test, num_classes)
+
+    model = Sequential()
+    model.add(Conv2D(32, kernel_size=(5, 5), strides=(1, 1), activation='relu', input_shape=input_shape))
+    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+    model.add(Conv2D(64, (5, 5), activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Conv2D(128, (3, 3), activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Conv2D(128, (3, 3), activation='relu'))
+    model.add(Conv2D(128, (3, 3), activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Flatten())
+    model.add(Dense(100, activation='relu'))
+
+    model.add(Dense(num_classes, activation='softmax'))
+
+    model.compile(loss=keras.losses.binary_crossentropy,
+                  optimizer=keras.optimize
+
+
+
+Train loss: 0.44220111831541986, Train accuracy: 0.7926267385482788
+Test loss: 0.5779645698933513, Test accuracy: 0.7177914381027222

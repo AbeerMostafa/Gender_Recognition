@@ -282,7 +282,7 @@ print(len(y_train))
 print(x_test.shape)
 print(len(y_test))
 
-#RF_classifier(x_train, y_train, x_test, y_test)
+RF_classifier(x_train, y_train, x_test, y_test)
 #svm_classifier(x_train, y_train, x_test, y_test)
-CNN(x_train, y_train, x_test, y_test)
+# CNN(x_train, y_train, x_test, y_test)
 
