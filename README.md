@@ -1,1 +1,1 @@
-# Gender_Recognition
+# Gender Recognition based on IMU sensor data
