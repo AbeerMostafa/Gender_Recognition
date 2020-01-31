@@ -8,10 +8,11 @@ from tensorflow.keras.callbacks import History
 import math as m
 import numpy as np
 import pandas as pd
-from numpy import array
+import sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
+
 
 from sklearn.metrics import accuracy_score, confusion_matrix
 
@@ -31,6 +32,9 @@ def RF_classifier(x_train, y_train, x_test, y_test):
         accuracy = accuracy_score(y_test, y_pred_RF)
         res.append(accuracy)
         print('prediction accuracy on test set: {:.4f}%'.format(accuracy* 100))
+        matrix = sklearn.metrics.confusion_matrix(y_test, y_pred_RF)
+        print('CM', matrix)
+
     print('max prediction accuracy on test set: {:.4f}%'.format(max(res) * 100))
 
 def svm_classifier(x_train, y_train, x_test, y_test):
@@ -95,7 +99,7 @@ def splitting_into_samples(df, sampling_rate):
     # splitted_dataset = [splitted_dataset[x] for x in rand_indices]
     return splitted_dataset
 
-def separate_labels(splitted_dataset, important_features):
+def separate_labels(splitted_dataset):
     labels = []
     for i in range(splitted_dataset.shape[0]):
         label = int(splitted_dataset[i,0,-1])
@@ -180,15 +184,13 @@ def load_HAR_dataset(file):
     sampling_rate = 50 #Hz
     df = pd.read_csv(file)
     # Watches
-    # important_features = ['rotation_rate_x(radians/s)',
+    # important_features = ['user_acc_x(G)',
+    #                       'user_acc_y(G)',
+    #                       'user_acc_z(G)',
+    #                       'rotation_rate_x(radians/s)',
     #                       'rotation_rate_y(radians/s)',
     #                       'rotation_rate_z(radians/s)',
-    #                       'gravity_x(G)',
-    #                       'gravity_y(G)',
-    #                       'gravity_z(G)',
-    #                       'user_acc_x(G)',
-    #                       'user_acc_y(G)',
-    #                       'user_acc_z(G)', 'label']
+    #                       'label']
 
     # Sensors
     important_features = ['x-axis (g)',
@@ -196,9 +198,12 @@ def load_HAR_dataset(file):
                           'z-axis (g)',
                           'x-axis (deg/s)',
                           'y-axis (deg/s)',
-                          'z-axis (deg/s)', 'label']
+                          'z-axis (deg/s)',
+                          'label']
 
-    return df,  important_features, sampling_rate
+    df = df[important_features]
+    df.fillna(0, inplace=True)
+    return df, sampling_rate
 
 def test_on_different_people():
     df_train, important_features, sampling_rate = load_HAR_dataset('HAR_DataSet_without_TestFiles.csv')
@@ -231,8 +236,8 @@ def test_on_different_people():
 #df,  important_features, sampling_rate= load_Osaka_dataset()
 
 
-file = 'HAR_DataSet_Labeled.csv'
-df,  important_features, sampling_rate= load_HAR_dataset(file)
+file = 'HAR_DataSet_RC_Labeled.csv'
+df, sampling_rate= load_HAR_dataset(file)
 
 df.info()
 print(df['label'].value_counts())
@@ -241,7 +246,7 @@ splitted_dataset = splitting_into_samples(df, sampling_rate)
 
 print("Number of samples and their shape :  ", splitted_dataset.shape)
 
-features, labels = separate_labels(splitted_dataset, important_features)
+features, labels = separate_labels(splitted_dataset)
 
 # features, labels = Autocorrelation(features, labels)
 # features, labels = remove_na(features, labels)
@@ -272,7 +277,7 @@ print(len(y_train))
 print(x_test.shape)
 print(len(y_test))
 
-# RF_classifier(x_train, y_train, x_test, y_test)
+RF_classifier(x_train, y_train, x_test, y_test)
 #svm_classifier(x_train, y_train, x_test, y_test)
-CNN(x_train, y_train, x_test, y_test)
+#CNN(x_train, y_train, x_test, y_test)
 

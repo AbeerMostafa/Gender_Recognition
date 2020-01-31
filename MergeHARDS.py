@@ -25,18 +25,26 @@ for i in addrs:
         label = 0
     else:
         label =1
+    print("The label of ", key[1:], " is ", label)
     folders = glob.glob(i + '/Walk/Esphalt/Alone/*')
     for j in folders:
         csv_files = glob.glob(j + '/*')
         for k in csv_files:
             print(k)
+            if '(1)' in k or '(2)' in k or '(3)' in k or '(4)' in k or '(5)' in k:
+                continue
             if  'C5-LUA.csv' in k:
+                file = None
                 file = pd.read_csv(k)
+                print(file.columns)
+                print(file.info())
                 file['label'] = None
                 file['label'].fillna(label, inplace=True)
                 LUA = LUA.append(file)
                 LUA = LUA.reset_index(drop=True)
+                print(LUA.info())
             elif  'C6-back.csv' in k:
+                file = None
                 file = pd.read_csv(k)
                 file['label'] = None
                 file['label'].fillna(label, inplace=True)
@@ -44,6 +52,7 @@ for i in addrs:
                 back = back.reset_index(drop=True)
 
             elif  'D2-RUA.csv' in k:
+                file = None
                 file = pd.read_csv(k)
                 file['label'] = None
                 file['label'].fillna(label, inplace=True)
@@ -51,24 +60,28 @@ for i in addrs:
                 RUA = RUA.reset_index(drop=True)
 
             elif  'D5-LC.csv' in k :
+                file = None
                 file = pd.read_csv(k)
                 file['label'] = None
                 file['label'].fillna(label, inplace=True)
                 LC = LC.append(file)
                 LC = LC.reset_index(drop=True)
             elif 'DE-Waist.csv' in k:
+                file = None
                 file = pd.read_csv(k)
                 file['label'] = None
                 file['label'].fillna(label, inplace=True)
                 waist = waist.append(file)
                 waist = waist.reset_index(drop=True)
             elif 'F5-RC.csv' in k:
+                file = None
                 file = pd.read_csv(k)
                 file['label'] = None
                 file['label'].fillna(label, inplace=True)
                 RC = RC.append(file)
                 RC = RC.reset_index(drop=True)
             elif 'right hand' in k or 'righthand' in k:
+                file = None
                 file = pd.read_csv(k)
                 file['label'] = None
                 file['label'].fillna(label, inplace=True)
@@ -76,6 +89,7 @@ for i in addrs:
                 RightWatch = RightWatch.reset_index(drop=True)
 
             elif 'left hand' in k or 'lefthand' in k:
+                file = None
                 file = pd.read_csv(k)
                 file['label'] = None
                 file['label'].fillna(label, inplace=True)
@@ -83,14 +97,8 @@ for i in addrs:
                 LeftWatch = LeftWatch.reset_index(drop=True)
 
 
-LUA = LUA.iloc[:, 2:]
-RUA = RUA.iloc[:, 2:]
-LC = LC.iloc[:, 2:]
-back = back.iloc[:, 2:]
-waist = waist.iloc[:, 2:]
-RC = RC.iloc[:, 2:]
-RightWatch = RightWatch.iloc[:, 2:]
-LeftWatch = LeftWatch.iloc[:, 2:]
+RightWatch = RightWatch.iloc[:, 4:]
+LeftWatch = LeftWatch.iloc[:, 4:]
 
 
 ef = LUA.to_csv('HAR_DataSet_LUA_Labeled.csv', index=None)
