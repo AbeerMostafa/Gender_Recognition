@@ -48,9 +48,9 @@ def CNN(x_train, y_train, x_test, y_test):
 
     input_shape = x_train[0].shape
     print("one sample input shape to the neural network =  ", input_shape, "num of samples =  ", x_train.shape[0] )
-    batch_size = 50
+    batch_size = 5
     num_classes = 2
-    epochs = 14
+    epochs = 20
 
     x_train = x_train.astype('float32')
     x_test = x_test.astype('float32')
@@ -59,18 +59,18 @@ def CNN(x_train, y_train, x_test, y_test):
     y_test = keras.utils.to_categorical(y_test, num_classes)
 
     model = Sequential()
-    model.add(Conv2D(32, kernel_size=(5, 5), strides=(1, 1), activation='relu', input_shape=input_shape))
-    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-    model.add(Conv2D(64, (5, 5), activation='relu'))
+    model.add(Conv2D(32, kernel_size=(3, 3), padding="same", activation='relu', input_shape=input_shape))
     model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Conv2D(128, (3, 3), activation='relu'))
+    model.add(Conv2D(64, (3, 3), padding="same", activation='relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Conv2D(128, (3, 3), activation='relu'))
+    model.add(Conv2D(128, (3, 3), padding="same", activation='relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Conv2D(128, (3, 3), activation='relu'))
+    model.add(Conv2D(128, (3, 3), padding="same", activation='relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Conv2D(128, (3, 3), activation='relu'))
+    model.add(Conv2D(256, (3, 3), padding="same", activation='relu'))
+    model.add(Conv2D(256, (3, 3), padding="same", activation='relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
+
     model.add(Flatten())
     model.add(Dense(100, activation='relu'))
 
@@ -144,13 +144,13 @@ def remove_na(features, labels):
     return features, labels
 
 def wavelet_transform(train_signals_ucihar, test_signals_ucihar, train_labels_ucihar, test_labels_ucihar):
-    scales = range(1, 128)
+    scales = range(1, 64)
     waveletname = 'morl'
 
     train_size = len(train_signals_ucihar)
     test_size = len(test_signals_ucihar)
 
-    train_data_cwt = np.ndarray(shape=(train_size, 127, 127, 6))
+    train_data_cwt = np.ndarray(shape=(train_size, 63, 63, 6))
 
     for ii in range(0, train_size):
         if ii % 100 == 0:
@@ -158,17 +158,17 @@ def wavelet_transform(train_signals_ucihar, test_signals_ucihar, train_labels_uc
         for jj in range(0, 6):
             signal = train_signals_ucihar[ii, :, jj]
             coeff, freq = pywt.cwt(signal, scales, waveletname, 1)
-            coeff_ = coeff[:, :127]
+            coeff_ = coeff[:, :63]
             train_data_cwt[ii, :, :, jj] = coeff_
 
-    test_data_cwt = np.ndarray(shape=(test_size, 127, 127, 6))
+    test_data_cwt = np.ndarray(shape=(test_size, 63, 63, 6))
     for ii in range(0, test_size):
         if ii % 100 == 0:
             print(ii)
         for jj in range(0, 6):
             signal = test_signals_ucihar[ii, :, jj]
             coeff, freq = pywt.cwt(signal, scales, waveletname, 1)
-            coeff_ = coeff[:, :127]
+            coeff_ = coeff[:, :63]
             test_data_cwt[ii, :, :, jj] = coeff_
 
     # train_labels_ucihar = list(map(lambda x: int(x) - 1, train_labels_ucihar))
@@ -183,7 +183,7 @@ def wavelet_transform(train_signals_ucihar, test_signals_ucihar, train_labels_uc
 
 def load_Osaka_dataset():
 
-    df = pd.read_csv('Tokyo_DataSet_Labeled.csv')
+    df = pd.read_csv('Tokyo_DataSet_FixedLength_Labeled.csv')
 
     important_features = ['Gx', 'Gy', 'Gz', 'Ax', 'Ay', 'Az', 'label']
     sampling_rate = 100 #Hz
@@ -282,7 +282,7 @@ print(len(y_train))
 print(x_test.shape)
 print(len(y_test))
 
-RF_classifier(x_train, y_train, x_test, y_test)
+# RF_classifier(x_train, y_train, x_test, y_test)
 #svm_classifier(x_train, y_train, x_test, y_test)
-# CNN(x_train, y_train, x_test, y_test)
+CNN(x_train, y_train, x_test, y_test)
 

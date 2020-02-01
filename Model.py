@@ -12,8 +12,8 @@ import sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
-
-
+import matplotlib.pyplot as plt
+from sklearn.metrics import plot_confusion_matrix
 from sklearn.metrics import accuracy_score, confusion_matrix
 
 
@@ -31,9 +31,19 @@ def RF_classifier(x_train, y_train, x_test, y_test):
         y_pred_RF = classifier.predict(x_test.reshape((x_test.shape[0], x_test.shape[1]*x_test.shape[2]*x_test.shape[3])))
         accuracy = accuracy_score(y_test, y_pred_RF)
         res.append(accuracy)
+        np.set_printoptions(precision=2)
+
         print('prediction accuracy on test set: {:.4f}%'.format(accuracy* 100))
-        matrix = sklearn.metrics.confusion_matrix(y_test, y_pred_RF)
-        print('CM', matrix)
+        title = "Normalized confusion matrix"
+        disp = plot_confusion_matrix(classifier, x_test.reshape((x_test.shape[0], x_test.shape[1]*x_test.shape[2]*x_test.shape[3])), y_test,
+                                         display_labels=['Male', 'Female'],
+                                         cmap=plt.cm.Blues,
+                                         normalize='true')
+        disp.ax_.set_title(title)
+        print(title)
+        print(disp.confusion_matrix)
+
+        plt.show()
 
     print('max prediction accuracy on test set: {:.4f}%'.format(max(res) * 100))
 
