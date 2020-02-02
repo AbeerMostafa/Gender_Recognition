@@ -43,7 +43,7 @@ def RF_classifier(x_train, y_train, x_test, y_test):
         print(title)
         print(disp.confusion_matrix)
 
-        plt.show()
+        plt.savefig('CM_RC_' + str(i) + '.png')
 
     print('max prediction accuracy on test set: {:.4f}%'.format(max(res) * 100))
 
@@ -241,7 +241,6 @@ def test_on_different_people():
     train_labels_ucihar = np.array(labels_train)
     train_signals_ucihar = features_train
     return train_signals_ucihar, test_signals_ucihar, train_labels_ucihar, test_labels_ucihar
-
 
 #df,  important_features, sampling_rate= load_Osaka_dataset()
 
