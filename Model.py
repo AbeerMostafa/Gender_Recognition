@@ -26,26 +26,15 @@ import pywt
 def RF_classifier(x_train, y_train, x_test, y_test):
     classifier = RandomForestClassifier()
     res = []
-    for i in range(100):
+    for i in range(10):
         classifier.fit(x_train.reshape((x_train.shape[0], x_train.shape[1]*x_train.shape[2]*x_train.shape[3])), y_train)
         y_pred_RF = classifier.predict(x_test.reshape((x_test.shape[0], x_test.shape[1]*x_test.shape[2]*x_test.shape[3])))
         accuracy = accuracy_score(y_test, y_pred_RF)
         res.append(accuracy)
-        np.set_printoptions(precision=2)
 
         print('prediction accuracy on test set: {:.4f}%'.format(accuracy* 100))
-        title = "Normalized confusion matrix"
-        disp = plot_confusion_matrix(classifier, x_test.reshape((x_test.shape[0], x_test.shape[1]*x_test.shape[2]*x_test.shape[3])), y_test,
-                                         display_labels=['Male', 'Female'],
-                                         cmap=plt.cm.Blues,
-                                         normalize='true')
-        disp.ax_.set_title(title)
-        print(title)
-        print(disp.confusion_matrix)
 
-        plt.savefig('CM_RC_' + str(i) + '.png')
-
-    print('max prediction accuracy on test set: {:.4f}%'.format(max(res) * 100))
+    print('Avg prediction accuracy on test set: {:.4f}%'.format((sum(res)/len(res) )* 100))
 
 def svm_classifier(x_train, y_train, x_test, y_test):
     SVM_clf = SVC(kernel='rbf', random_state=0)
@@ -209,6 +198,12 @@ def load_HAR_dataset(file):
                           'x-axis (deg/s)',
                           'y-axis (deg/s)',
                           'z-axis (deg/s)',
+                          'x-axis (g)_2',
+                          'y-axis (g)_2',
+                          'z-axis (g)_2',
+                          'x-axis (deg/s)_2',
+                          'y-axis (deg/s)_2',
+                          'z-axis (deg/s)_2',
                           'label']
 
     df = df[important_features]
@@ -242,51 +237,112 @@ def test_on_different_people():
     train_signals_ucihar = features_train
     return train_signals_ucihar, test_signals_ucihar, train_labels_ucihar, test_labels_ucihar
 
-#df,  important_features, sampling_rate= load_Osaka_dataset()
+def concat_with_same_features(file1_HAR, file2):
+    f1 = pd.read_csv(file1_HAR)
+    f2 = pd.read_csv(file2)
+
+    important_features = ['x-axis (g)',
+                          'y-axis (g)',
+                          'z-axis (g)',
+                          'x-axis (deg/s)',
+                          'y-axis (deg/s)',
+                          'z-axis (deg/s)',
+                          'label']
+    f1 = f1[important_features]
+    f2.columns = important_features
+    f1 = f1.append(f2)
+    f1 = f1.reset_index(drop = True)
+    result = 'combinations/HAR_OSAKA.csv'
+    ef = f1.to_csv(result, index=None)
+    return result
+
+def concat_with_adding_features(file1, file2, sensors):
+    f1 = pd.read_csv(file1)
+    f2 = pd.read_csv(file2)
+    important_features = ['x-axis (g)',
+                          'y-axis (g)',
+                          'z-axis (g)',
+                          'x-axis (deg/s)',
+                          'y-axis (deg/s)',
+                          'z-axis (deg/s)',
+                          'label']
+    f1 = f1[important_features]
+    f2 = f2[important_features]
+    f2.columns = ['x-axis (g)_2',
+                          'y-axis (g)_2',
+                          'z-axis (g)_2',
+                          'x-axis (deg/s)_2',
+                          'y-axis (deg/s)_2',
+                          'z-axis (deg/s)_2',
+                          'label_2']
+    print(f1.info())
+    print(f2.info())
+    result = pd.concat([f1, f2], axis=1)
+    indeces = result[result['label'] != result['label_2']].index
+    result.drop(indeces, inplace=True)
+    result = result.reset_index(drop=True)
+    print(result.info())
+    result = result.drop(['label_2'], axis=1)
+
+    file_name = 'combinations/HAR_' + sensors + '.csv'
+    ef = result.to_csv(file_name, index=None)
+    return file_name
 
 
-file = 'HAR_DataSet_RC_Labeled.csv'
-df, sampling_rate= load_HAR_dataset(file)
 
-df.info()
-print(df['label'].value_counts())
+if __name__ == "__main__":
 
-splitted_dataset = splitting_into_samples(df, sampling_rate)
+    sensors = ['LUA', 'RUA', 'LC', 'RC', 'back', 'waist']
+    s1 = ['RC', 'back', 'waist']
+    for sensor in s1:
+        file1 = 'HAR_DataSet_' + sensor + '_Labeled.csv'
+        for sensor2 in sensors:
+            print("The sensors are", sensor, sensor2)
+            if sensor == sensor2:
+                continue
+            file2 = 'HAR_DataSet_' + sensor2 + '_Labeled.csv'
+            #df,  important_features, sampling_rate= load_Osaka_dataset()
 
-print("Number of samples and their shape :  ", splitted_dataset.shape)
+            # file = concat_with_same_features('HAR_DataSet_waist_Labeled.csv', 'Tokyo_DataSet_FixedLength_Labeled.csv')
 
-features, labels = separate_labels(splitted_dataset)
+            file = concat_with_adding_features(file1, file2, sensor + '_' + sensor2)
+            df, sampling_rate= load_HAR_dataset(file)
 
-# features, labels = Autocorrelation(features, labels)
-# features, labels = remove_na(features, labels)
+            df.info()
+            print(df['label'].value_counts())
+
+            splitted_dataset = splitting_into_samples(df, sampling_rate)
+
+            print("Number of samples and their shape :  ", splitted_dataset.shape)
+
+            features, labels = separate_labels(splitted_dataset)
+
+            # features, labels = Autocorrelation(features, labels)
+            # features, labels = remove_na(features, labels)
 
 
-print(features.shape, len(labels))
-print(features, labels)
+            x = features
+            y = np.array(labels)
 
-x = features
-print(x.shape)
+            #train_signals_ucihar, test_signals_ucihar, train_labels_ucihar, test_labels_ucihar = test_on_different_people()
+            train_signals_ucihar, test_signals_ucihar, train_labels_ucihar, test_labels_ucihar = train_test_split(x, y, test_size=0.2, random_state=0)  # Acc 95.36%
 
-y = np.array(labels)
+            print(train_signals_ucihar.shape)
+            print(test_signals_ucihar.shape)
+            print(train_labels_ucihar.shape)
+            print(test_labels_ucihar.shape)
 
-#train_signals_ucihar, test_signals_ucihar, train_labels_ucihar, test_labels_ucihar = test_on_different_people()
-train_signals_ucihar, test_signals_ucihar, train_labels_ucihar, test_labels_ucihar = train_test_split(x, y, test_size=0.2, random_state=0)  # Acc 95.36%
+            # x_train, y_train, x_test, y_test = train_signals_ucihar, train_labels_ucihar, test_signals_ucihar, test_labels_ucihar
 
-print(train_signals_ucihar.shape)
-print(test_signals_ucihar.shape)
-print(train_labels_ucihar.shape)
-print(test_labels_ucihar.shape)
+            x_train, y_train, x_test, y_test = wavelet_transform(train_signals_ucihar, test_signals_ucihar, train_labels_ucihar, test_labels_ucihar)
 
-# x_train, y_train, x_test, y_test = train_signals_ucihar, train_labels_ucihar, test_signals_ucihar, test_labels_ucihar
+            print(x_train.shape)
+            print(len(y_train))
+            print(x_test.shape)
+            print(len(y_test))
 
-x_train, y_train, x_test, y_test = wavelet_transform(train_signals_ucihar, test_signals_ucihar, train_labels_ucihar, test_labels_ucihar)
+            RF_classifier(x_train, y_train, x_test, y_test)
+            #svm_classifier(x_train, y_train, x_test, y_test)
+            #CNN(x_train, y_train, x_test, y_test)
 
-print(x_train.shape)
-print(len(y_train))
-print(x_test.shape)
-print(len(y_test))
-
-RF_classifier(x_train, y_train, x_test, y_test)
-#svm_classifier(x_train, y_train, x_test, y_test)
-#CNN(x_train, y_train, x_test, y_test)
 
