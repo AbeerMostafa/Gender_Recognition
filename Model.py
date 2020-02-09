@@ -15,11 +15,9 @@ from sklearn.svm import SVC
 import matplotlib.pyplot as plt
 from sklearn.metrics import plot_confusion_matrix
 from sklearn.metrics import accuracy_score, confusion_matrix
-
-
+import glob
 from sklearn.ensemble import RandomForestClassifier
-
-
+import statistics as stat
 import pywt
 
 
@@ -34,7 +32,7 @@ def RF_classifier(x_train, y_train, x_test, y_test):
 
         print('prediction accuracy on test set: {:.4f}%'.format(accuracy* 100))
 
-    print('Avg prediction accuracy on test set: {:.4f}%'.format((sum(res)/len(res) )* 100))
+    print('Avg prediction accuracy on test set: {:.4f}% and stdev: {:.4f}%'.format((sum(res)/len(res) )* 100, stat.stdev(res)))
 
 def svm_classifier(x_train, y_train, x_test, y_test):
     SVM_clf = SVC(kernel='rbf', random_state=0)
@@ -140,22 +138,22 @@ def wavelet_transform(train_signals_ucihar, test_signals_ucihar, train_labels_uc
     train_size = len(train_signals_ucihar)
     test_size = len(test_signals_ucihar)
 
-    train_data_cwt = np.ndarray(shape=(train_size, 63, 63, 6))
+    train_data_cwt = np.ndarray(shape=(train_size, 63, 63, 12))
 
     for ii in range(0, train_size):
         if ii % 1000 == 0:
             print(ii)
-        for jj in range(0, 6):
+        for jj in range(0, 12):
             signal = train_signals_ucihar[ii, :, jj]
             coeff, freq = pywt.cwt(signal, scales, waveletname, 1)
             coeff_ = coeff[:, :63]
             train_data_cwt[ii, :, :, jj] = coeff_
 
-    test_data_cwt = np.ndarray(shape=(test_size, 63, 63, 6))
+    test_data_cwt = np.ndarray(shape=(test_size, 63, 63, 12))
     for ii in range(0, test_size):
         if ii % 100 == 0:
             print(ii)
-        for jj in range(0, 6):
+        for jj in range(0, 12):
             signal = test_signals_ucihar[ii, :, jj]
             coeff, freq = pywt.cwt(signal, scales, waveletname, 1)
             coeff_ = coeff[:, :63]
@@ -205,7 +203,13 @@ def load_HAR_dataset(file):
                           'y-axis (deg/s)_2',
                           'z-axis (deg/s)_2',
                           'label']
-
+    # important_features = ['x-axis (g)',
+    #                       'y-axis (g)',
+    #                       'z-axis (g)',
+    #                       'x-axis (deg/s)',
+    #                       'y-axis (deg/s)',
+    #                       'z-axis (deg/s)',
+    #                       'label']
     df = df[important_features]
     df.fillna(0, inplace=True)
     return df, sampling_rate
@@ -241,33 +245,57 @@ def concat_with_same_features(file1_HAR, file2):
     f1 = pd.read_csv(file1_HAR)
     f2 = pd.read_csv(file2)
 
-    important_features = ['x-axis (g)',
+    important_features_HAR = ['x-axis (g)',
                           'y-axis (g)',
                           'z-axis (g)',
                           'x-axis (deg/s)',
                           'y-axis (deg/s)',
                           'z-axis (deg/s)',
                           'label']
-    f1 = f1[important_features]
-    f2.columns = important_features
+    important_features_tokyo = ['Ax',
+                          'Ay',
+                          'Az',
+                          'Gx',
+                          'Gy',
+                          'Gz',
+                          'label']
+    f1 = f1[important_features_HAR]
+    f2 = f2[important_features_tokyo]
+    f2.columns = important_features_HAR
     f1 = f1.append(f2)
     f1 = f1.reset_index(drop = True)
-    result = 'combinations/HAR_OSAKA.csv'
+    result = 'HAR_TOKYO.csv'
     ef = f1.to_csv(result, index=None)
     return result
 
 def concat_with_adding_features(file1, file2, sensors):
     f1 = pd.read_csv(file1)
     f2 = pd.read_csv(file2)
-    important_features = ['x-axis (g)',
+    important_features_sensors = ['x-axis (g)',
                           'y-axis (g)',
                           'z-axis (g)',
                           'x-axis (deg/s)',
                           'y-axis (deg/s)',
                           'z-axis (deg/s)',
                           'label']
-    f1 = f1[important_features]
-    f2 = f2[important_features]
+
+    important_features_watches = ['user_acc_x(G)',
+                          'user_acc_y(G)',
+                          'user_acc_z(G)',
+                          'rotation_rate_x(radians/s)',
+                          'rotation_rate_y(radians/s)',
+                          'rotation_rate_z(radians/s)',
+                          'label']
+
+    f1 = f1[important_features_sensors]
+    f2 = f2[important_features_sensors]
+    f1.columns = ['x-axis (g)',
+                  'y-axis (g)',
+                  'z-axis (g)',
+                  'x-axis (deg/s)',
+                  'y-axis (deg/s)',
+                  'z-axis (deg/s)',
+                  'label']
     f2.columns = ['x-axis (g)_2',
                           'y-axis (g)_2',
                           'z-axis (g)_2',
@@ -275,13 +303,11 @@ def concat_with_adding_features(file1, file2, sensors):
                           'y-axis (deg/s)_2',
                           'z-axis (deg/s)_2',
                           'label_2']
-    print(f1.info())
-    print(f2.info())
+
     result = pd.concat([f1, f2], axis=1)
     indeces = result[result['label'] != result['label_2']].index
     result.drop(indeces, inplace=True)
     result = result.reset_index(drop=True)
-    print(result.info())
     result = result.drop(['label_2'], axis=1)
 
     file_name = 'combinations/HAR_' + sensors + '.csv'
@@ -291,26 +317,28 @@ def concat_with_adding_features(file1, file2, sensors):
 
 
 if __name__ == "__main__":
+    #
+    # sensors = ['LUA', 'RUA', 'LC', 'RC', 'back', 'waist']
+    #
+    # for sensor in sensors:
+    #     file1 = 'HAR_DataSet_' + sensor + '_Labeled.csv'
+    #     for sensor2 in sensors:
+    #         print("The sensors are", sensor, sensor2)
+    #         if sensor == sensor2:
+    #             continue
+    #         file2 = 'HAR_DataSet_' + sensor2 + '_Labeled.csv'
 
-    sensors = ['LUA', 'RUA', 'LC', 'RC', 'back', 'waist']
-    s1 = ['RC', 'back', 'waist']
-    for sensor in s1:
-        file1 = 'HAR_DataSet_' + sensor + '_Labeled.csv'
-        for sensor2 in sensors:
-            print("The sensors are", sensor, sensor2)
-            if sensor == sensor2:
-                continue
-            file2 = 'HAR_DataSet_' + sensor2 + '_Labeled.csv'
-            #df,  important_features, sampling_rate= load_Osaka_dataset()
+            # df,  important_features, sampling_rate= load_Osaka_dataset()
 
             # file = concat_with_same_features('HAR_DataSet_waist_Labeled.csv', 'Tokyo_DataSet_FixedLength_Labeled.csv')
 
-            file = concat_with_adding_features(file1, file2, sensor + '_' + sensor2)
+            # file = concat_with_adding_features(file1, file2, sensor + '_' + sensor2)
+
+            #file = concat_with_same_features('HAR_DataSet_waist_Labeled.csv', 'Tokyo_DataSet_FixedLength_Labeled.csv')
+        for file in glob.glob('combinations/*'):
             df, sampling_rate= load_HAR_dataset(file)
 
-            df.info()
-            print(df['label'].value_counts())
-
+            print(file)
             splitted_dataset = splitting_into_samples(df, sampling_rate)
 
             print("Number of samples and their shape :  ", splitted_dataset.shape)

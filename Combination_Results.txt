@@ -1,208 +1,172 @@
-The sensors are LUA RUA
+combinations\HAR_back_LC.csv
 
-prediction accuracy on test set: 87.4083%
-prediction accuracy on test set: 86.6748%
-prediction accuracy on test set: 86.3081%
-prediction accuracy on test set: 87.0416%
-prediction accuracy on test set: 87.4083%
-prediction accuracy on test set: 86.7971%
-prediction accuracy on test set: 86.3081%
-prediction accuracy on test set: 87.1638%
-prediction accuracy on test set: 87.8973%
-prediction accuracy on test set: 87.2861%
-Avg prediction accuracy on test set: 87.0293%
 
-The sensors are LUA LC
+Avg prediction accuracy on test set: 93.8143% and stdev: 0.0032%
+combinations\HAR_back_LeftWatch.csv
 
-prediction accuracy on test set: 89.9204%
-prediction accuracy on test set: 90.0531%
-prediction accuracy on test set: 90.8488%
-prediction accuracy on test set: 90.4509%
-prediction accuracy on test set: 90.7162%
-prediction accuracy on test set: 90.1857%
-prediction accuracy on test set: 90.4509%
-prediction accuracy on test set: 90.3183%
-prediction accuracy on test set: 89.9204%
-prediction accuracy on test set: 89.9204%
-Avg prediction accuracy on test set: 90.2785%
 
-The sensors are LUA RC
+Avg prediction accuracy on test set: 91.0545% and stdev: 0.0056%
+combinations\HAR_back_LUA.csv
 
-prediction accuracy on test set: 87.9957%
-prediction accuracy on test set: 88.2101%
-prediction accuracy on test set: 88.1029%
-prediction accuracy on test set: 87.6742%
-prediction accuracy on test set: 88.1029%
-prediction accuracy on test set: 88.2101%
-prediction accuracy on test set: 88.7460%
-prediction accuracy on test set: 87.7814%
-prediction accuracy on test set: 87.6742%
-prediction accuracy on test set: 88.2101%
-Avg prediction accuracy on test set: 88.0707%
 
-The sensors are LUA back
+Avg prediction accuracy on test set: 89.4118% and stdev: 0.0037%
+combinations\HAR_back_RC.csv
 
-prediction accuracy on test set: 88.4804%
-prediction accuracy on test set: 87.0098%
-prediction accuracy on test set: 87.3775%
-prediction accuracy on test set: 86.2745%
-prediction accuracy on test set: 87.0098%
-prediction accuracy on test set: 87.2549%
-prediction accuracy on test set: 87.0098%
-prediction accuracy on test set: 86.8873%
-prediction accuracy on test set: 86.5196%
-prediction accuracy on test set: 87.2549%
-Avg prediction accuracy on test set: 87.1078%
 
-The sensors are LUA waist
+Avg prediction accuracy on test set: 95.0348% and stdev: 0.0026%
+combinations\HAR_back_RightWatch.csv
 
-prediction accuracy on test set: 88.4449%
-prediction accuracy on test set: 88.7689%
-prediction accuracy on test set: 89.5248%
-prediction accuracy on test set: 88.5529%
-prediction accuracy on test set: 88.7689%
-prediction accuracy on test set: 89.5248%
-prediction accuracy on test set: 88.2289%
-prediction accuracy on test set: 88.4449%
-prediction accuracy on test set: 88.7689%
-prediction accuracy on test set: 88.8769%
-Avg prediction accuracy on test set: 88.7905%
 
-The sensors are RUA LUA
+Avg prediction accuracy on test set: 90.8710% and stdev: 0.0046%
+combinations\HAR_back_RUA.csv
 
-prediction accuracy on test set: 87.4083%
-prediction accuracy on test set: 87.2861%
-prediction accuracy on test set: 87.8973%
-prediction accuracy on test set: 87.6528%
-prediction accuracy on test set: 87.7751%
-prediction accuracy on test set: 87.2861%
-prediction accuracy on test set: 87.0416%
-prediction accuracy on test set: 87.6528%
-prediction accuracy on test set: 87.4083%
-prediction accuracy on test set: 87.6528%
-Avg prediction accuracy on test set: 87.5061%
 
-The sensors are RUA LC
-prediction accuracy on test set: 92.3186%
-prediction accuracy on test set: 92.6031%
-prediction accuracy on test set: 92.4609%
-prediction accuracy on test set: 92.4609%
-prediction accuracy on test set: 92.3186%
-prediction accuracy on test set: 92.7454%
-prediction accuracy on test set: 91.7496%
-prediction accuracy on test set: 92.3186%
-prediction accuracy on test set: 92.1764%
-prediction accuracy on test set: 91.7496%
-Avg prediction accuracy on test set: 92.2902%
+Avg prediction accuracy on test set: 88.8400% and stdev: 0.0049%
+combinations\HAR_back_waist.csv
 
-The sensors are RUA RC
 
-prediction accuracy on test set: 90.1734%
-prediction accuracy on test set: 90.5202%
-prediction accuracy on test set: 89.8266%
-prediction accuracy on test set: 88.7861%
-prediction accuracy on test set: 90.6358%
-prediction accuracy on test set: 89.7110%
-prediction accuracy on test set: 90.6358%
-prediction accuracy on test set: 90.0578%
-prediction accuracy on test set: 89.9422%
-prediction accuracy on test set: 90.5202%
-Avg prediction accuracy on test set: 90.0809%
+Avg prediction accuracy on test set: 94.8727% and stdev: 0.0034%
+combinations\HAR_LC_back.csv
 
-The sensors are RUA back
 
-prediction accuracy on test set: 87.3255%
-prediction accuracy on test set: 87.9699%
-prediction accuracy on test set: 87.9699%
-prediction accuracy on test set: 89.0440%
-prediction accuracy on test set: 88.3996%
-prediction accuracy on test set: 87.6477%
-prediction accuracy on test set: 88.0773%
-prediction accuracy on test set: 87.8625%
-prediction accuracy on test set: 87.8625%
-prediction accuracy on test set: 88.1847%
-Avg prediction accuracy on test set: 88.0344%
+Avg prediction accuracy on test set: 93.9857% and stdev: 0.0025%
+combinations\HAR_LC_LeftWatch.csv
 
-The sensors are RUA waist
 
-prediction accuracy on test set: 88.9406%
-prediction accuracy on test set: 89.0570%
-prediction accuracy on test set: 88.9406%
-prediction accuracy on test set: 89.0570%
-prediction accuracy on test set: 89.4063%
-prediction accuracy on test set: 88.1257%
-prediction accuracy on test set: 88.7078%
-prediction accuracy on test set: 88.4750%
-prediction accuracy on test set: 88.7078%
-prediction accuracy on test set: 88.7078%
-Avg prediction accuracy on test set: 88.8126%
+Avg prediction accuracy on test set: 96.5509% and stdev: 0.0022%
+combinations\HAR_LC_LUA.csv
 
-The sensors are LC LUA
+Avg prediction accuracy on test set: 94.3103% and stdev: 0.0028%
+combinations\HAR_LC_RC.csv
 
-prediction accuracy on test set: 94.6950%
-prediction accuracy on test set: 94.8276%
-prediction accuracy on test set: 94.6950%
-prediction accuracy on test set: 94.8276%
-prediction accuracy on test set: 94.5623%
-prediction accuracy on test set: 94.5623%
-prediction accuracy on test set: 95.0928%
-prediction accuracy on test set: 94.8276%
-prediction accuracy on test set: 94.6950%
-prediction accuracy on test set: 94.5623%
-Avg prediction accuracy on test set: 94.7347%
 
-The sensors are LC RUA
+Avg prediction accuracy on test set: 94.7767% and stdev: 0.0032%
+combinations\HAR_LC_RightWatch.csv
 
-prediction accuracy on test set: 94.4523%
-prediction accuracy on test set: 94.8791%
-prediction accuracy on test set: 94.0256%
-prediction accuracy on test set: 93.8834%
-prediction accuracy on test set: 94.7368%
-prediction accuracy on test set: 94.7368%
-prediction accuracy on test set: 95.3058%
-prediction accuracy on test set: 95.1636%
-prediction accuracy on test set: 94.7368%
-prediction accuracy on test set: 94.5946%
-Avg prediction accuracy on test set: 94.6515%
 
-The sensors are LC RC
+Avg prediction accuracy on test set: 94.4693% and stdev: 0.0038%
+combinations\HAR_LC_RUA.csv
 
-prediction accuracy on test set: 94.3166%
-prediction accuracy on test set: 93.0988%
-prediction accuracy on test set: 93.5047%
-prediction accuracy on test set: 93.2341%
-prediction accuracy on test set: 94.4520%
-prediction accuracy on test set: 94.4520%
-prediction accuracy on test set: 94.1813%
-prediction accuracy on test set: 94.1813%
-prediction accuracy on test set: 93.9107%
-prediction accuracy on test set: 94.0460%
-Avg prediction accuracy on test set: 93.9378%
 
-The sensors are LC back
+Avg prediction accuracy on test set: 95.9459% and stdev: 0.0028%
+combinations\HAR_LC_waist.csv
 
-prediction accuracy on test set: 93.4286%
-prediction accuracy on test set: 92.7143%
-prediction accuracy on test set: 93.2857%
-prediction accuracy on test set: 93.0000%
-prediction accuracy on test set: 93.2857%
-prediction accuracy on test set: 92.8571%
-prediction accuracy on test set: 93.1429%
-prediction accuracy on test set: 93.0000%
-prediction accuracy on test set: 92.4286%
-prediction accuracy on test set: 94.0000%
-Avg prediction accuracy on test set: 93.1143%
 
-The sensors are LC waist
+Avg prediction accuracy on test set: 96.7388% and stdev: 0.0026%
+combinations\HAR_LeftWatch_RightWatch.csv
 
-prediction accuracy on test set: 92.5575%
-prediction accuracy on test set: 93.0988%
-prediction accuracy on test set: 92.1516%
-prediction accuracy on test set: 92.2869%
-prediction accuracy on test set: 92.5575%
-prediction accuracy on test set: 92.8281%
-prediction accuracy on test set: 93.2341%
-prediction accuracy on test set: 93.3694%
-prediction accuracy on test set: 92.9635%
-prediction accuracy on test set: 92.6928%
-Avg prediction accuracy on test set: 92.7740%
+
+Avg prediction accuracy on test set: 91.2606% and stdev: 0.0040%
+combinations\HAR_LUA_back.csv
+
+
+Avg prediction accuracy on test set: 89.5466% and stdev: 0.0033%
+combinations\HAR_LUA_LC.csv
+
+
+Avg prediction accuracy on test set: 94.4164% and stdev: 0.0020%
+combinations\HAR_LUA_LeftWatch.csv
+
+
+Avg prediction accuracy on test set: 92.9979% and stdev: 0.0065%
+combinations\HAR_LUA_RC.csv
+
+
+Avg prediction accuracy on test set: 94.7267% and stdev: 0.0041%
+combinations\HAR_LUA_RightWatch.csv
+
+
+Avg prediction accuracy on test set: 93.1703% and stdev: 0.0064%
+combinations\HAR_LUA_RUA.csv
+
+
+Avg prediction accuracy on test set: 94.2647% and stdev: 0.0083%
+combinations\HAR_LUA_waist.csv
+
+
+Avg prediction accuracy on test set: 92.6782% and stdev: 0.0034%
+combinations\HAR_RC_back.csv
+
+
+Avg prediction accuracy on test set: 94.9420% and stdev: 0.0021%
+combinations\HAR_RC_LC.csv
+
+
+Avg prediction accuracy on test set: 94.6820% and stdev: 0.0038%
+combinations\HAR_RC_LeftWatch.csv
+
+
+Avg prediction accuracy on test set: 96.5698% and stdev: 0.0035%
+combinations\HAR_RC_LUA.csv
+
+
+Avg prediction accuracy on test set: 94.5981% and stdev: 0.0037%
+combinations\HAR_RC_RightWatch.csv
+
+
+Avg prediction accuracy on test set: 93.6639% and stdev: 0.0048%
+combinations\HAR_RC_RUA.csv
+
+
+Avg prediction accuracy on test set: 94.6705% and stdev: 0.0036%
+combinations\HAR_RC_waist.csv
+
+
+Avg prediction accuracy on test set: 96.0169% and stdev: 0.0030%
+combinations\HAR_RightWatch_LeftWatch.csv
+
+
+Avg prediction accuracy on test set: 91.1925% and stdev: 0.0064%
+combinations\HAR_RUA_back.csv
+
+
+Avg prediction accuracy on test set: 88.6466% and stdev: 0.0044%
+combinations\HAR_RUA_LC.csv
+
+
+Avg prediction accuracy on test set: 96.0171% and stdev: 0.0022%
+combinations\HAR_RUA_LeftWatch.csv
+
+
+Avg prediction accuracy on test set: 93.8272% and stdev: 0.0046%
+combinations\HAR_RUA_LUA.csv
+
+
+Avg prediction accuracy on test set: 91.7237% and stdev: 0.0041%
+combinations\HAR_RUA_RC.csv
+
+
+Avg prediction accuracy on test set: 94.5434% and stdev: 0.0045%
+combinations\HAR_RUA_RightWatch.csv
+
+
+Avg prediction accuracy on test set: 90.6826% and stdev: 0.0030%
+combinations\HAR_RUA_waist.csv
+
+
+Avg prediction accuracy on test set: 95.0291% and stdev: 0.0030%
+combinations\HAR_waist_back.csv
+
+
+Avg prediction accuracy on test set: 94.8264% and stdev: 0.0049%
+combinations\HAR_waist_LC.csv
+
+
+Avg prediction accuracy on test set: 96.6306% and stdev: 0.0024%
+combinations\HAR_waist_LeftWatch.csv
+
+
+Avg prediction accuracy on test set: 96.6539% and stdev: 0.0026%
+combinations\HAR_waist_LUA.csv
+
+
+Avg prediction accuracy on test set: 92.8186% and stdev: 0.0044%
+combinations\HAR_waist_RC.csv
+
+Avg prediction accuracy on test set: 96.0805% and stdev: 0.0033%
+combinations\HAR_waist_RightWatch.csv
+
+Avg prediction accuracy on test set: 95.3160% and stdev: 0.0044%
+combinations\HAR_waist_RUA.csv
+
+Avg prediction accuracy on test set: 95.0524% and stdev: 0.0025%
