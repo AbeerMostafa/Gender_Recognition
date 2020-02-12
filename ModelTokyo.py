@@ -183,7 +183,7 @@ def wavelet_transform(train_signals_ucihar, test_signals_ucihar, train_labels_uc
 
 def load_Osaka_dataset():
 
-    df = pd.read_csv('Tokyo_DataSet_FixedLength_Labeled.csv')
+    df = pd.read_csv('Tokyo_DataSet_WALK_and_SLOPE_FixedLength_Labeled.csv')
 
     important_features = ['Gx', 'Gy', 'Gz', 'Ax', 'Ay', 'Az', 'label']
     sampling_rate = 100 #Hz
@@ -282,7 +282,7 @@ print(len(y_train))
 print(x_test.shape)
 print(len(y_test))
 
-# RF_classifier(x_train, y_train, x_test, y_test)
+#RF_classifier(x_train, y_train, x_test, y_test)
 #svm_classifier(x_train, y_train, x_test, y_test)
 CNN(x_train, y_train, x_test, y_test)
 

@@ -10,11 +10,11 @@ with open('IDGenderAgelist.csv') as csvfile:
 
 
 
-data_path = 'AutomaticExtractionData_IMUZCenter/*.csv'
+data_path = 'IMUZCenter/*.csv'
 addrs = glob.glob(data_path)
 
 
-df = pd.read_csv('AutomaticExtractionData_IMUZCenter/T0_ID004948_Center_seq0.csv', skiprows=2, names=['Gx','Gy','Gz', 'Ax','Ay','Az'])
+df = pd.read_csv('IMUZCenter/T0_ID004636_Walk1.csv', skiprows=2, names=['Gx','Gy','Gz', 'Ax','Ay','Az'])
 df['label'] = None
 df['label'].fillna(1, inplace=True)
 df = df.iloc[0:500, :]
@@ -35,4 +35,4 @@ for key in dict.keys():
 
 df.info()
 print(df['label'].value_counts())
-ef = df.to_csv ('Tokyo_DataSet_FixedLength_Labeled.csv', index = None)
+ef = df.to_csv ('Tokyo_DataSet_WALK_and_SLOPE_FixedLength_Labeled.csv', index = None)
