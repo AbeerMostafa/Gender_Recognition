@@ -1,2 +1,2 @@
 # Gender Recognition based on IMU sensor data
-offline branch
+online branch
